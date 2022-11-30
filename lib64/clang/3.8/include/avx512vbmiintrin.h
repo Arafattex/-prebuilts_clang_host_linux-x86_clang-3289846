@@ -113,4 +113,25 @@ _mm512_mask_multishift_epi64_epi8 (__m512i __W, __mmask64 __M, __m512i __X, __m5
                 (__mmask64) __M);
 }
 
-s
+static __inline__ __m512i __DEFAULT_FN_ATTRS
+_mm512_maskz_multishift_epi64_epi8 (__mmask64 __M, __m512i __X, __m512i __Y)
+{
+  return (__m512i) __builtin_ia32_vpmultishiftqb512_mask ((__v64qi) __X,
+                (__v64qi) __Y,
+                (__v64qi) _mm512_setzero_si512 (),
+                (__mmask64) __M);
+}
+
+static __inline__ __m512i __DEFAULT_FN_ATTRS
+_mm512_multishift_epi64_epi8 (__m512i __X, __m512i __Y)
+{
+  return (__m512i) __builtin_ia32_vpmultishiftqb512_mask ((__v64qi) __X,
+                (__v64qi) __Y,
+                (__v64qi) _mm512_undefined_epi32 (),
+                (__mmask64) -1);
+}
+
+
+#undef __DEFAULT_FN_ATTRS
+
+#endif
